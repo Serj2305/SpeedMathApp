@@ -5,14 +5,9 @@ import { AuthProvider } from './providers/AuthProvider';
 export default function App() {
   return (
     <AuthProvider>
-      <Navigate/>  
+      <Navigate/>
     </AuthProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFEFD5',
-  },
-});
+

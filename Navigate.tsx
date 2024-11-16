@@ -7,6 +7,8 @@ import { EditProfile } from './pages/EditProfile'
 import { Game } from './pages/Game'
 import { Leaderboard } from './pages/Leaderboard'
 import { ProfileGuest } from './pages/ProfileGuest'
+import { Login } from './pages/Login'
+import { Registration } from './pages/Registration'
 
 
 export type StackParamList = {
@@ -15,7 +17,9 @@ export type StackParamList = {
   EditProfile: undefined,
   Game: undefined,
   Leaderboard: undefined,
-  ProfileGuest: undefined
+  ProfileGuest: undefined,
+  Login: undefined,
+  Registration: undefined
 }
 
 const Stack = createStackNavigator<StackParamList>()
@@ -30,8 +34,6 @@ export const Navigate = () => {
           component={Home}
           options={{ title: 'Главная', headerShown: false }}
         />
-
-
         <Stack.Screen
           name='Game'
           component={Game}
@@ -56,6 +58,16 @@ export const Navigate = () => {
           name='ProfileGuest'
           component={ProfileGuest}
           options={{ title: 'Профиль гостя', headerShown: false }}
+        />
+        <Stack.Screen
+          name='Login'
+          component={Login}
+          options={{ title: 'Вход', headerShown: false }}
+        />
+        <Stack.Screen
+          name='Registration'
+          component={Registration}
+          options={{ title: 'Регистрация', headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

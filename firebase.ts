@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore } from "firebase/firestore";
 import {
     getAuth,
     signOut,
@@ -14,14 +14,14 @@ import {
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBrPHWiAlx9PxOO0-7gRWKIlVPfNFwX2y4",
-  authDomain: "speed-math-app.firebaseapp.com",
-  projectId: "speed-math-app",
-  storageBucket: "speed-math-app.firebasestorage.app",
-  messagingSenderId: "822827597580",
-  appId: "1:822827597580:web:45ac496fe85d6f1bf05329",
-  measurementId: "G-2ZV2VGJQPH"
-};
+    apiKey: "AIzaSyBrPHWiAlx9PxOO0-7gRWKIlVPfNFwX2y4",
+    authDomain: "speed-math-app.firebaseapp.com",
+    projectId: "speed-math-app",
+    storageBucket: "speed-math-app.firebasestorage.app",
+    messagingSenderId: "822827597580",
+    appId: "1:822827597580:web:9d32632e4e29c9e6f05329",
+    measurementId: "G-3S1YTDXFNX"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -40,4 +40,9 @@ export const login = (email: string, password: string) =>
 
 export const logout = () => signOut(auth)
 
-export const db = getFirestore(app)
+export const db = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+    })
+
+
+

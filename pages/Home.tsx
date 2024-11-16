@@ -5,8 +5,11 @@ import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/nati
 import { StackParamList } from '../Navigate'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { gstyle } from '../gstyle'
+import { useAuth } from '../hooks/useAuth'
 
 export const Home = ({navigation} : NativeStackScreenProps<StackParamList, 'Home'>) => {
+
+  const {user} = useAuth()
 
   return (
     <View style={gstyle.container}>
@@ -14,8 +17,8 @@ export const Home = ({navigation} : NativeStackScreenProps<StackParamList, 'Home
       <Text style={styles.title}>SPEED MATH</Text>
         <View style={styles.buttonContainer}>
           <CustomButton text='Начать' backgroundColor='#47A76A' onPressButton={() => navigation.navigate('Game')}/>
-          <CustomButton text='Таблица лидеров' backgroundColor='#47A76A' onPressButton={() => navigation.navigate('Leaderboard')}/>
-          <CustomButton text='Профиль' backgroundColor='#47A76A' onPressButton={() => navigation.navigate('Profile')}/>
+          <CustomButton text='Таблица лидеров' backgroundColor='#47A76A' onPressButton={() => user ? navigation.navigate('Leaderboard') : navigation.navigate('ProfileGuest')}/>
+          <CustomButton text='Профиль' backgroundColor='#47A76A' onPressButton={() => user ? navigation.navigate('Profile') : navigation.navigate('ProfileGuest')}/>
           <Image 
             source={require('../assets/home1.png')}
             style={[styles.image, {top: -100, left: 30}]}

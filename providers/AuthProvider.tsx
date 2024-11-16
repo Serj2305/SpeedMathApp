@@ -24,13 +24,14 @@ export const AuthProvider:FC<{ children: React.ReactNode }> = ({children}) => {
     setIsLoading(true)
     try {
       const { user } = await register(email, password)
-
-      await addDoc(collection(db, 'users'), {
-        _id: user.uid,
-        displayName: 'no name'
-      })
+      
+      await addDoc(collection(db, "users"), {
+        _id: user.uid, // уникальный ID пользователя
+        displayName: 'no Name', // имя пользователя
+      });
+      
     } catch (error: any) {
-      Alert.alert('Error reg', error)
+      Alert.alert('Error reg', error.message)
     } finally {
       setIsLoading(false)
     }
@@ -41,7 +42,7 @@ export const AuthProvider:FC<{ children: React.ReactNode }> = ({children}) => {
     try {
       await login(email, password)
     } catch (error: any) {
-      Alert.alert('Error login', error)
+      Alert.alert('Error login', error.message)
     } finally {
       setIsLoading(false)
     }
@@ -52,7 +53,7 @@ export const AuthProvider:FC<{ children: React.ReactNode }> = ({children}) => {
     try {
       await logout()
     } catch (error: any) {
-      Alert.alert('Error logout', error)
+      Alert.alert('Error logout', error.message)
     } finally {
       setIsLoading(false)
     }
