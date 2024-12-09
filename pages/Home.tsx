@@ -1,16 +1,15 @@
 import React from 'react'
-import {Text, View, StyleSheet, Image } from 'react-native'
+import {Text, View, StyleSheet, Image} from 'react-native'
 import { CustomButton } from '../components/CustomButton'
-import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types'
 import { StackParamList } from '../Navigate'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { gstyle } from '../gstyle'
 import { useAuth } from '../hooks/useAuth'
+import { StackScreenProps } from '@react-navigation/stack'
 
-export const Home = ({navigation} : NativeStackScreenProps<StackParamList, 'Home'>) => {
-
+export const Home = ({navigation} : StackScreenProps<StackParamList, 'Home'>) => {
   const {user} = useAuth()
-
+  
   return (
     <View style={gstyle.container}>
       <SafeAreaView>
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#3C8E5A',
     marginTop: '5%',
-    marginHorizontal: 'auto'
+    textAlign: 'center'
   },
   buttonContainer: {
     marginTop: '50%',

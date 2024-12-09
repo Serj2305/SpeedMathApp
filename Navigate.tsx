@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Home } from './pages/Home'
 import { Profile } from './pages/Profile'
@@ -9,6 +9,7 @@ import { Leaderboard } from './pages/Leaderboard'
 import { ProfileGuest } from './pages/ProfileGuest'
 import { Login } from './pages/Login'
 import { Registration } from './pages/Registration'
+import { BackHandler } from 'react-native'
 
 
 export type StackParamList = {
@@ -26,6 +27,11 @@ const Stack = createStackNavigator<StackParamList>()
 
 
 export const Navigate = () => {
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => { return true });
+  }, [])
+  
   return (
     <NavigationContainer>
       <Stack.Navigator>

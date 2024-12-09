@@ -1,6 +1,6 @@
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
-import { TextInput, View, Text, StyleSheet } from 'react-native'
+import { TextInput, View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import { CustomButton } from './CustomButton';
 
 export interface IData {
@@ -14,17 +14,20 @@ interface IForm {
   onSubmit: (data: IData) => void
   type?: string
   textButton: string
-
+  styleProp?: StyleProp<ViewStyle>
+  defaultValues?: {
+    name: string
+  }
 }
 
-export const Form = ({ onSubmit, type, textButton }: IForm) => {
-  const { control, handleSubmit, watch, formState: { errors } } = useForm<IData>();
+export const Form = ({ onSubmit, type, textButton, styleProp, defaultValues }: IForm) => {
+  const { control, handleSubmit, watch, formState: { errors } } = useForm<IData>({defaultValues});
 
   const password = watch('password');
 
   return (
     <View>
-      <View style={styles.form}>
+      <View style={[styles.form, styleProp]}>
         {type === 'editProfile' && <Text style={styles.label}>Имя</Text>}
         {type === 'editProfile' &&
           <Controller
@@ -38,25 +41,27 @@ export const Form = ({ onSubmit, type, textButton }: IForm) => {
               />
             )}
             name="name"
-            rules={{ required: 'Это обязательное поле', pattern: { value: /^\S+@\S+$/i, message: 'Введите валидную почту' } }}
+            rules={{ minLength: { value: 5, message: 'имя должно содержать минимум 5 символов' } }}
           />
         }
         {errors.name && <Text style={styles.errorText}>{errors.name.message}</Text>}
 
-        <Text style={styles.label}>Почта</Text>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={value => onChange(value)}
-              value={value}
-            />
-          )}
-          name="email"
-          rules={{ required: 'Это обязательное поле', pattern: { value: /^\S+@\S+$/i, message: 'Введите валидную почту' } }}
-        />
+        {type !== 'editProfile' && <Text style={styles.label}>Почта</Text>}
+        {type !== 'editProfile' &&
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+              />
+            )}
+            name="email"
+            rules={{ required: 'Это обязательное поле', pattern: { value: /^\S+@\S+$/i, message: 'Введите валидную почту' } }}
+          />
+        }
         {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
 
         <Text style={styles.label}>Пароль</Text>
@@ -72,7 +77,13 @@ export const Form = ({ onSubmit, type, textButton }: IForm) => {
             />
           )}
           name="password"
-          rules={{ required: 'Это обязательное поле', minLength: { value: 5, message: 'пароль должен содержать минимум 5 символов' } }}
+          rules={{
+            required: type !== 'editProfile' ? "Это обязательное поле" : false,
+            minLength: {
+              value: 5,
+              message: 'Пароль должен содержать минимум 5 символов',
+            },
+          }}
         />
         {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
 
@@ -90,8 +101,8 @@ export const Form = ({ onSubmit, type, textButton }: IForm) => {
               />
             )}
             name="repeatPassword"
-            rules={{ 
-              required: 'Это обязательное поле',
+            rules={{
+              required: type !== 'editProfile' ? "Это обязательное поле" : false,
               validate: (value) =>
                 value === password || 'Пароли не совпадают', // Проверка на совпадение с полем "Пароль"
             }}
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   errorText: {
-    
+
     color: 'red',
     marginBottom: 10,
   },

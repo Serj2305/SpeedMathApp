@@ -3,11 +3,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { gstyle } from '../gstyle'
 import { BackButton } from '../components/BackButton'
-import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types'
 import { StackParamList } from '../Navigate'
 import { CustomButton } from '../components/CustomButton'
+import { StackScreenProps } from '@react-navigation/stack'
 
-export const ProfileGuest = ({navigation}: NativeStackScreenProps<StackParamList, 'ProfileGuest'>) => {
+export const ProfileGuest = ({navigation}: StackScreenProps<StackParamList, 'ProfileGuest'>) => {
   return (
     <View style={gstyle.container}>
       <SafeAreaView>

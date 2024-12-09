@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { gstyle } from '../gstyle'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BackButton } from '../components/BackButton'
-import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types'
 import { StackParamList } from '../Navigate'
 import { Form, IData } from '../components/Form'
 import { useAuth } from '../hooks/useAuth'
 import { Loader } from '../components/Loader'
+import { StackScreenProps } from '@react-navigation/stack'
 
 
 
-export const Registration = ({ navigation }: NativeStackScreenProps<StackParamList, 'Registration'>) => {
+export const Registration = ({ navigation }: StackScreenProps<StackParamList, 'Registration'>) => {
 
     const {isLoading, register, user} = useAuth()
 
@@ -29,13 +29,15 @@ export const Registration = ({ navigation }: NativeStackScreenProps<StackParamLi
   return (
     <View style={gstyle.container}>
       <SafeAreaView>
-        <BackButton onPressButton={() => navigation.navigate('ProfileGuest')} />
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Регистрация</Text>
-          {
-            isLoading ?  <Loader/> : <Form textButton='Зарегистрироваться' onSubmit={onSubmit} type={'registration'}/>
-          }
-        </View>
+        <ScrollView>
+          <BackButton onPressButton={() => navigation.navigate('ProfileGuest')} />
+          <View style={styles.formContainer}>
+            <Text style={styles.title}>Регистрация</Text>
+            {
+              isLoading ?  <Loader/> : <Form textButton='Зарегистрироваться' onSubmit={onSubmit} type={'registration'}/>
+            }
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   )
